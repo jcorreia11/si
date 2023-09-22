@@ -197,6 +197,49 @@ class Dataset:
         X = np.random.rand(n_samples, n_features)
         y = np.random.randint(0, n_classes, n_samples)
         return cls(X, y, features=features, label=label)
+    
+    @classmethod
+    def dropna(self):
+        
+        """
+        Drop all samples containing at least one null value (NaN).
+    
+        """
+        nans = np.isnan(self.X).any(axis=1)
+        self.X = self.X[~nans]
+        
+        if self.y is not None:
+            self.y = self.y[~nans]
+        return self
+    
+    @classmethod
+    def fillna(self, value: Union[float, str] = 'mean'):
+        
+        """
+        Replaces all null values with another value or the mean or median of the feature/variable.
+    
+        """
+        
+        if not isinstance(value, str):
+            self.X = np.nan_to_num(self.X, nan=value)
+        elif value == 'mean':
+            self.X = np.nan_to_num(self.X, nan=np.nanmean(self.X, axis=0))
+        elif value == 'median':
+            self.X = np.nan_to_num(self.X, nan=np.nanmedian(self.X, axis=0))
+        else:
+            raise ValueError(f"Invalid value: {value}")
+        return self
+    
+    @classmethod
+    def remove_by_index(self, index: int):
+        """
+        Removes a sample by its index.
+        """
+        self.X = np.delete(self.X, index, axis=0)
+        if self.y is not None:
+            self.y = np.delete(self.y, index, axis=0)
+        return self    
+    
 
 
 if __name__ == '__main__':
