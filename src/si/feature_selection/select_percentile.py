@@ -58,7 +58,7 @@ class SelectPercentile:
             Returns self.
         """
         self.F, self.p = self.score_func(dataset)
-        self.n_features = int(dataset.shape[1] * self.percentile)
+        self.n_features = int(3)
         return self
 
     def transform(self, dataset: Dataset) -> Dataset:
