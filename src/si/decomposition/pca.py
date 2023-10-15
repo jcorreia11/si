@@ -28,8 +28,9 @@ class PCA:
         self.n_components = n_components
 
     def fit(self, dataset: Dataset) -> 'PCA':
-       
-        self.X_center = self.scale(dataset)
+        X = dataset.X
+        self._mean = np.mean(X, axis=0)
+        self.X_center = X -  self._mean
         cov_matrix = np.cov(self.X_center.T)
         self.e_vals, self.e_vecs = np.linalg.eig(cov_matrix)
         
