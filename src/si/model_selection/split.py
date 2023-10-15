@@ -4,7 +4,6 @@ import numpy as np
 
 from si.data.dataset import Dataset
 
-
 def train_test_split(dataset: Dataset, test_size: float = 0.2, random_state: int = 42) -> Tuple[Dataset, Dataset]:
     """
     Split the dataset into training and testing sets
