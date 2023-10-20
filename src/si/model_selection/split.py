@@ -73,7 +73,7 @@ def stratified_train_test_split(dataset: Dataset, test_size: float = 0.2, random
     # loop through unique labels
     for label in unique_labels:
         # calculate the number of test samples for the current class
-        n_test = int(counts[label] * test_size)
+        n_test = int(counts[np.where(unique_labels == label)[0][0]] * test_size)
         # get indices for the current class
         class_indices = np.where(dataset.y == label)[0]
         # shuffle and select indices for the current class and add them to the test indices
