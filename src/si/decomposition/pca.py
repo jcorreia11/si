@@ -37,15 +37,14 @@ class PCA:
         return self
 
     def transform(self, dataset: Dataset) -> np.ndarray:
-        
-        X_center = self.scale(dataset) 
+         
         self.sorted_index = np.argsort(self.e_vals)[::-1]
         self.e_vals_sorted = self.e_vals[self.sorted_index]
         self.e_vecs_sorted = self.e_vecs[:, self.sorted_index]
         # transition matrix, or change of base matrix. 
         self.e_vecs_subset = self.e_vecs_sorted[:, 0:self.n_components]
         # projects the data into a lower dimension.
-        X_reduced = self.e_vecs_subset.T.dot(X_center.T).T
+        X_reduced = self.e_vecs_subset.T.dot(self.X_center.T).T
         return X_reduced
 
     def fit_transform(self, dataset: Dataset) -> np.ndarray:
